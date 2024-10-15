@@ -1,0 +1,240 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+    <link rel="stylesheet" href="Css/base.css" />
+    <link rel="stylesheet" href="Css/index.css" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Noto+Sans+TC:wght@400;700&display=swap"
+      rel="stylesheet"
+    />
+  </head>
+  <body>
+    <div>
+      <!-- 頭部區域 -->
+      <div class="header">
+        <h2></h2>
+      </div>
+
+      <!-- 主要區域 -->
+      <div class="main">
+        <!-- banner區塊 -->
+        <div class="banner wrapper">
+          <img src="./images/banner.jpg" alt="" />
+        </div>
+        <!-- 點餐區 -->
+        <div class="order wrapper">
+          <h4>ORDER HERE</h4>
+          <h5>店家：<a id="shop" href="" title="menu" target="_blank"></a></h5>
+          <form id="orderForm">
+            <label
+              ><b>姓名：</b
+              ><input type="text" id="name" placeholder="你是誰？" required
+            /></label>
+            <label
+              ><b>品項：</b
+              ><input type="text" id="item" placeholder="點什麼？" required
+            /></label>
+            <label
+              ><b>加料區：</b
+              ><input type="text" id="addition" placeholder="加料哦"
+            /></label>
+            <label>
+              <b>尺寸：</b>
+              <select id="size">
+                <option selected>L</option>
+                <option>M</option>
+              </select>
+            </label>
+            <label>
+              <b>甜度：</b>
+              <select id="sugar">
+                <option>無糖</option>
+                <option selected>微糖</option>
+                <option>半糖</option>
+                <option>少糖</option>
+                <option>全糖</option>
+              </select>
+            </label>
+            <label>
+              <b>冰量：</b>
+              <select id="ice">
+                <option>去冰</option>
+                <option selected>微冰</option>
+                <option>少冰</option>
+                <option>正常冰</option>
+              </select>
+            </label>
+            <label>
+              <b>金額：</b>
+              <input type="number" id="price" placeholder="$$$" required />
+            </label>
+            <br /><br /><br />
+            <button type="submit">送出</button>
+          </form>
+
+          <!-- 訂餐結果顯示區 -->
+          <div class="view">
+            <table class="wrapper">
+              <thead>
+                <tr>
+                  <th>序</th>
+                  <th>姓名</th>
+                  <th>品項名</th>
+                  <th>加料</th>
+                  <th>尺寸</th>
+                  <th>甜度</th>
+                  <th>冰量</th>
+                  <th>金額</th>
+                </tr>
+              </thead>
+              <tbody id="orderTableBody">
+                <!-- Orders will be inserted here -->
+              </tbody>
+              <tfoot>
+                <tr>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td></td>
+                  <td>加總：</td>
+                  <td id="totalPrice">0</td>
+                </tr>
+              </tfoot>
+            </table>
+          </div>
+        </div>
+      </div>
+      <div class="foot">
+        <h6>Copyright | Kounenn</h6>
+      </div>
+    </div>
+
+    <!-- Firebase SDK -->
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+
+    <!-- Our application script -->
+    <script src="Js/App.js"></script>
+    <script>
+      // Default shop name before catching from the url
+      let message = "";
+      let element = document.getElementById("shop");
+      function getMessageFromUrl() {
+        const urlParams = new URLSearchParams(window.location.search);
+        message = urlParams.get("message"); // Get the "message" parameter from the URL
+        element.innerHTML = message ? message : "";
+      }
+      // Run the method to get the shop name into message variable for the url assignment
+      getMessageFromUrl();
+      let url = "";
+      switch (message) {
+        case "可不可":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipMe4tnLh60ghc9okg1TE9qaGRoTyMGxcqAunQD6=s1016-k-no";
+          break;
+        case "初韻":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipOLFPXiKkR3X-3VbxRJt8TxcLMUXLhTSDh2d3_N=s1012-k-no";
+          break;
+        case "花火禾茶":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipPLMWEQIV_LIHf_WJ534xU5_5Zm1TwvEq4cN-oy=s1054-k-no";
+          break;
+        case "50嵐":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipM8GQceQesGYsSpB7JC6w73AaeTO_cEwHCJbPDq=s812-k-no";
+          break;
+        case "清心福全":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipP0_FHBJILMZGGIhtdpsQvoA_389tYzhGnaqG4H=s1031-k-no";
+          break;
+        case "五桐號":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipPdM2BHwYof_qe06fzeS8YJGlySDqDqtIYiMXYJ=s901-k-no";
+          break;
+        case "迷克夏":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipPm3v1DgCzX_nu7RrTvR8fC955gbmVOfIUdRFTP=s812-k-no";
+          break;
+        case "得正":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipPtRogEJSm8f9i6zf7VZDoh7G5QLzj-q7j7oP_o=s1354-k-no";
+          break;
+        case "馬祖奶茶":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipM3s4dhalBlGvoZGQp_s_h0Zh6Mhadvt26vr3Ly=s812-k-no";
+          break;
+        case "龜記":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipOVOrFZC2paGlGh8Xwdf7HMWsbqegHVioh3fP3Y=s921-k-no";
+          break;
+        case "Tea's原味":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipP7YWDiQvIPhKXsHYt1icYR7FVSJkUZu9JjjQPx=s779-k-no";
+          break;
+        case "茗茗究市":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipOnFqnbv8lTQoRY4KxhZoV1DHjmNmuU7H-j6GI=s1030-k-no";
+          break;
+        case "黛黛茶":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipOakKoDgfCr9hAZy7juCKF4dGxc9G3LAm7WB0vZ=s1016-k-no";
+          break;
+        case "上宇林":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipODPTjV-XzKbTG0GBcCDq_bgUdiARp5uJFhMI5Y=s773-k-no";
+          break;
+        case "吾奶王":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipOTssK7SK8Nc9CzS4wvSeiBYjYMUrsg8O_s-7ab=s1354-k-no";
+          break;
+        case "鮮喝道":
+          url =
+            "https://lh5.googleusercontent.com/p/AF1QipOpX4z-39JnuFBh9yKmY9YN0zurWHopVdVdNaua=s811-k-no";
+          break;
+        default: // Keeps the url remaining its default value(empty string)
+          break;
+      }
+      element.href = url;
+    </script>
+    <!--
+	"可不可"
+	2023.11.https://lh5.googleusercontent.com/p/AF1QipMe4tnLh60ghc9okg1TE9qaGRoTyMGxcqAunQD6=s1016-k-no
+	"初韻"
+	2023.09.https://lh5.googleusercontent.com/p/AF1QipOLFPXiKkR3X-3VbxRJt8TxcLMUXLhTSDh2d3_N=s1012-k-no
+	"花火禾茶"
+	2024.05.https://lh5.googleusercontent.com/p/AF1QipPLMWEQIV_LIHf_WJ534xU5_5Zm1TwvEq4cN-oy=s1054-k-no
+	"50嵐"
+	2023.04.https://lh5.googleusercontent.com/p/AF1QipM8GQceQesGYsSpB7JC6w73AaeTO_cEwHCJbPDq=s812-k-no
+	"清心福全"
+	2022.09.https://lh5.googleusercontent.com/p/AF1QipP0_FHBJILMZGGIhtdpsQvoA_389tYzhGnaqG4H=s1031-k-no
+	"五桐號"
+	2024.04.https://lh5.googleusercontent.com/p/AF1QipPdM2BHwYof_qe06fzeS8YJGlySDqDqtIYiMXYJ=s901-k-no
+	"迷克夏"
+	2024.09.https://lh5.googleusercontent.com/p/AF1QipPm3v1DgCzX_nu7RrTvR8fC955gbmVOfIUdRFTP=s812-k-no
+	"得正"
+	2024.01.https://lh5.googleusercontent.com/p/AF1QipPtRogEJSm8f9i6zf7VZDoh7G5QLzj-q7j7oP_o=s1354-k-no
+	"馬祖奶茶"
+	2023.12.https://lh5.googleusercontent.com/p/AF1QipM3s4dhalBlGvoZGQp_s_h0Zh6Mhadvt26vr3Ly=s812-k-no
+	"龜記"
+	2024.08.https://lh5.googleusercontent.com/p/AF1QipOVOrFZC2paGlGh8Xwdf7HMWsbqegHVioh3fP3Y=s921-k-no
+	"Tea's原味",//
+	2024.04.https://lh5.googleusercontent.com/p/AF1QipP7YWDiQvIPhKXsHYt1icYR7FVSJkUZu9JjjQPx=s779-k-no
+	"茗茗究市"
+	2023.10.https://lh5.googleusercontent.com/p/AF1QipOnFqnbv8lTQoRY4KxhZoV1DHjmNmuU7H-j6GI=s1030-k-no
+	"黛黛茶"
+	2024.06.https://lh5.googleusercontent.com/p/AF1QipOakKoDgfCr9hAZy7juCKF4dGxc9G3LAm7WB0vZ=s1016-k-no
+	"上宇林"
+	2023.08.https://lh5.googleusercontent.com/p/AF1QipODPTjV-XzKbTG0GBcCDq_bgUdiARp5uJFhMI5Y=s773-k-no
+	"吾奶王"
+	2024.09.https://lh5.googleusercontent.com/p/AF1QipOTssK7SK8Nc9CzS4wvSeiBYjYMUrsg8O_s-7ab=s1354-k-no
+	"鮮喝道"
+	2024.09.https://lh5.googleusercontent.com/p/AF1QipOpX4z-39JnuFBh9yKmY9YN0zurWHopVdVdNaua=s811-k-no
+	-->
+  </body>
+</html>
